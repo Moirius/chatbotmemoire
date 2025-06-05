@@ -6,17 +6,20 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      background-color: #fdfdfd;
-      color: #222;
+      background: transparent;
+      color: white;
       max-width: 800px;
       margin: 60px auto;
       padding: 0 20px;
       line-height: 1.6;
+      background-color: rgba(0, 0, 0, 0.6); /* optionnel : voile foncé semi-transparent */
+      border-radius: 16px;
     }
 
     h1 {
       font-size: 2em;
       margin-bottom: 20px;
+      text-align: center;
     }
 
     input {
@@ -24,37 +27,47 @@
       font-size: 1.1em;
       padding: 12px;
       margin-bottom: 20px;
-      border: none;
-      border-bottom: 2px solid #ccc;
+      background-color: transparent;
+      color: white;
+      border: 2px solid #888;
+      border-radius: 12px;
       outline: none;
     }
 
     input:focus {
-      border-bottom-color: #333;
+      border-color: white;
     }
 
     button {
       font-size: 1em;
       padding: 10px 20px;
-      background-color: black;
-      color: white;
+      background-color: white;
+      color: black;
       border: none;
+      border-radius: 12px;
       cursor: pointer;
     }
 
     button:hover {
-      background-color: #444;
+      background-color: #ddd;
     }
 
     #response {
       margin-top: 30px;
       white-space: pre-wrap;
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 16px;
+      border-radius: 12px;
+    }
+
+    ::placeholder {
+      color: #ccc;
     }
   </style>
 </head>
 <body>
   <h1>Chatbot – Mémoire TouchDesigner</h1>
-  <input type="text" id="query" placeholder="Ex. : De quoi parle le mémoire ?">
+  <input type="text" id="query" placeholder="Ex. : Donne-moi un résumé du mémoire">
   <button onclick="ask()">Envoyer</button>
   <div id="response"></div>
 
@@ -74,12 +87,11 @@
         const data = await res.json();
         document.getElementById("response").innerHTML = marked.parse(data.answer);
       } catch (err) {
-        document.getElementById("response").innerText = "❌ Erreur de réponse.";
+        document.getElementById("response").innerHTML = `<span style="color: pink;">❌ Erreur de réponse.</span>`;
       }
     }
   </script>
 
-  <!-- Librairie Markdown pour styliser les réponses -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </body>
 </html>
