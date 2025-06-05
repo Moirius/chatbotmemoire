@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Chatbot - Mémoire TouchDesigner</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdfdfd;
+      color: #222;
+      max-width: 800px;
+      margin: 60px auto;
+      padding: 0 20px;
+      line-height: 1.6;
+    }
+
+    h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      font-size: 1.1em;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: none;
+      border-bottom: 2px solid #ccc;
+      outline: none;
+    }
+
+    input:focus {
+      border-bottom-color: #333;
+    }
+
+    button {
+      font-size: 1em;
+      padding: 10px 20px;
+      background-color: black;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #444;
+    }
+
+    #response {
+      margin-top: 30px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Chatbot – Mémoire TouchDesigner</h1>
+  <input type="text" id="query" placeholder="Ex. : De quoi parle le mémoire ?">
+  <button onclick="ask()">Envoyer</button>
+  <div id="response"></div>
+
+  <script>
+    async function ask() {
+      const question = document.getElementById("query").value;
+      if (!question.trim()) return;
+
+      document.getElementById("response").innerText = "⏳ Chargement...";
+      try {
+        const res = await fetch("http://127.0.0.1:8000/ask", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ query: question })
+        });
+
+        const data = await res.json();
+        document.getElementById("response").innerHTML = marked.parse(data.answer);
+      } catch (err) {
+        document.getElementById("response").innerText = "❌ Erreur de réponse.";
+      }
+    }
+  </script>
+
+  <!-- Librairie Markdown pour styliser les réponses -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</body>
+</html>
