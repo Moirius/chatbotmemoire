@@ -16,7 +16,7 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 if not openai_api_key:
     raise ValueError("❌ Clé API OpenAI non trouvée. Vérifie ton fichier .env")
 
-FILE_PATH = "Mémoire Marius Biotteau (1).pdf"
+FILE_PATH = "Mémoire Marius Biotteau.pdf"
 FAISS_INDEX_PATH = "faiss_index"
 
 def load_and_split_pdf(file_path):
